@@ -1,7 +1,7 @@
-Projekt autorstwa Maji Witkowskiej i Micha≥a WÛjcika
+Projekt autorstwa Maji Witkowskiej i Micha≈Ça W√≥jcika
 
-Temat: System wypoøyczalni samochodÛw
+Dzia≈Ça w oparciu o wzorzec projektowy MVVM(Model-View-ViewModel)
+Jego za≈Ço≈ºenie jest takie, ≈ºe Model odpowiada za wystawieni i pobranie danych, widok do ich prezentacji, a widok-model za przetwarzanie danych i sterowanie widokiem.
+Projekt zosta≈Ç zrealizowany u≈ºywaj≈°c technologii WPF (.NET framework) w atchitekturze SPA(Single Page Application)
+Projekt polrga≈Ç na stworzeniu GUI do kodu posiadajƒÖcego klasƒô abstrakcyjnƒÖ oraz interfejs.
 
-Dzia≥a w oparciu o wzorzec projektowy MVVM(Model-View-ViewModel)
-Jego za≥oøenie jest takie, øe Model odpowiada za wystawieni i pobranie danych, widok do ich prezentacji, a widok-model za przetwarzanie danych i sterowanie widokiem.
-Projekt zosta≥ zrealizowany uøywajπc technologii WPF (.NET framework) w atchitekturze SPA(Single Page Application)
