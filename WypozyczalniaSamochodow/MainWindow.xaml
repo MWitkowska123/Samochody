@@ -1,0 +1,284 @@
+﻿<Window
+    x:Class="WypozyczalniaSamochodow.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WypozyczalniaSamochodow"
+    xmlns:model="clr-namespace:WypozyczalniaSamochodow.Model"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    
+    <!--https://stackoverflow.com/questions/6145888/how-to-bind-an-enum-to-a-combobox-control-in-wpf-->
+    <Window.Resources>
+        <ObjectDataProvider x:Key="nadwozieTypeEnum" MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="model:NadwozieType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <ObjectDataProvider x:Key="silnikTypeEnum" MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="model:SilnikType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition  Width="300"/>
+            <ColumnDefinition Width="AUTO"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="200" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Label
+            Grid.Row="0"
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            Content="Lista Aut w wypożyczalni:" />
+        <ListView
+            Name="samochodyListView"
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="0,10"
+            HorizontalAlignment="Center"
+            ItemsSource="{Binding SamochodyCollection}"
+            SelectedItem="{Binding WybranySamochod}"
+            SelectionChanged="samochodyListView_SelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="LightBlue" CornerRadius="5">
+                        <TextBlock>
+                            <Label Content="{Binding MarkaSamochodu}" FontWeight="Bold" />
+                            <Label Content="{Binding ModelSamochodu}" FontWeight="Bold" />
+                            <Label Content="{Binding RokProdukcji}" FontWeight="Light" />
+                            <Label Content="{Binding Przebieg}" />
+                            <Label Content="km" />
+                            <Label Content="{Binding Pojemnosc}" />
+                        </TextBlock>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button
+            Name="usunBtn"
+            Grid.Row="2"
+            Grid.Column="1"
+            Background="DarkRed"
+            Height="30"
+            Click="usunBtn_Click"
+            VerticalAlignment="Top"
+            Content="Usun z listy"
+            FontWeight="Bold"
+            Foreground="Black"
+            IsEnabled="{Binding BtnEnabled}" 
+            Margin="0,45,0,0" />
+
+        <Button
+            Name="exportBtn"
+            Grid.Column="1"
+            Background="DarkGreen"
+            Grid.Row="2"
+            Height="30"           
+            VerticalAlignment="Top"
+            Click="exportBtn_Click"
+            Content="Exportuj do XML"
+            FontWeight="Bold"
+            Foreground="Black"
+            IsEnabled="{Binding BtnEnabled}" 
+            Margin="0,10,0,0" />
+
+
+
+        <Label
+            Grid.RowSpan="2"
+            Width="104"
+            Name="markaLabel"            
+            Margin="29,10,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Marka" />
+        <TextBox
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            Width="149"
+            Name="markaTextBox"
+            Margin="118,18,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            TextWrapping="Wrap" />
+        
+        <Label
+            Grid.Row="1"
+            Name="modelLabel"
+            Width="104"
+            Height="34"
+            Margin="29,7,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Model" />
+        <TextBox
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Name="modelTextBox"
+            Width="149"
+            Margin="118,13,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"            
+            TextWrapping="Wrap" />
+
+        <Label
+            Grid.Row="1"
+            Name="rokLabel"
+            Width="104"
+            Height="35"
+            Margin="29,30,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Rok produkcji" />
+        <TextBox
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Name="rokTextBox"
+            Width="149"            
+            Margin="118,37,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"            
+            TextWrapping="Wrap" />
+        
+        <Label
+            Grid.Row="1"
+            Width="104"
+            Name="pojemnoscLabel"
+            Height="26"
+            Margin="29,55,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Pojemność" />
+        <TextBox
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Name="pojemnoscTextBox"
+            Width="149"
+            Margin="118,61,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            TextWrapping="Wrap" />
+        
+        <Label
+            Grid.Row="1"
+            Width="104"
+            Height="26"
+            Margin="29,81,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Name="doorsLabel"
+            Content="Ilość drzwi" />
+        <TextBox
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Width="149"
+            Margin="118,87,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Name="doorsTextBox"            
+            TextWrapping="Wrap" />
+        
+        <Label
+            Grid.Row="1"
+            Width="104"
+            Name="wheelsLabel"
+            Height="26"
+            Margin="29,103,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Ilość kół" />
+        <TextBox
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Width="149"
+            Name="wheelsTextBox"            
+            Margin="118,109,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"            
+            TextWrapping="Wrap" />
+
+        <Label
+            Grid.Row="1"
+            Width="104"
+            Height="26"
+            Margin="29,145,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Typ nadwozia" />
+        <!--nawigacja do definicji F12-->
+        <ComboBox
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Width="149"
+            Name="typNadwoziaCombo"
+            ItemsSource="{Binding Source={StaticResource nadwozieTypeEnum}}"
+            Margin="118,151,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"/>
+        
+        <Label
+            Grid.Row="1"
+            Width="104"
+            Height="26"
+            Margin="29,170,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Typ silnika" />
+        <ComboBox
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Width="149"
+            Name="typSilnikaCombo"
+            ItemsSource="{Binding Source={StaticResource silnikTypeEnum}}"
+            Margin="118,175,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"/>
+        
+        <Label
+            Grid.Row="1"
+            Width="104"
+            x:Name="przebiegLabel"
+            Height="26"
+            Margin="29,124,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Przebieg" />
+        <TextBox
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Width="149"
+            x:Name="przebiegTextBox"            
+            Margin="118,130,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"            
+            TextWrapping="Wrap" />
+
+        <Button
+            Name="addButton"
+            Grid.Row="2"
+            Grid.Column="0"
+            Height="30"
+            Margin="31,10,31,35"
+            Background="DarkGreen"
+            Click="addButton_Click"
+            Content="Dodaj samochów"
+            FontWeight="Bold"
+            Foreground="Black" />
+    </Grid>
+</Window>
